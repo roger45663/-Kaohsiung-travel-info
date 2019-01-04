@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Travel Website",
   "main": "index.js",
+  "homepage": "https://roger45663.github.io/-Kaohsiung-travel-info",
   "scripts": {
     "sass": "node-sass -w scss/ -o dist/css/ --recursive",
+    "deploy": "gh-pages -d dist"
   },
   "author": "Pei-Ting Lin",
   "license": "ISC",
