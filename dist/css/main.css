@@ -1,0 +1,231 @@
+@media screen and (max-width: 768px) {
+  #bg_image .title {
+    font-size: 3.5rem; }
+  #hot_area {
+    height: 200px !important; }
+    #hot_area .btn_group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between; }
+      #hot_area .btn_group .btn {
+        margin: 0 0 10px 0; }
+  main .row {
+    flex-direction: column;
+    align-items: center; }
+    main .row .col {
+      width: 80% !important; } }
+
+* {
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Microsoft JhengHei', serif; }
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: center; }
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0; }
+
+a {
+  text-decoration: none; }
+
+header {
+  height: 500px;
+  padding: 150px 0; }
+  header#bg_image {
+    background: url(https://farm4.staticflickr.com/3763/9172843058_74cba014c9_o.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center; }
+    header#bg_image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 500px;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.09); }
+  header .title {
+    color: #fff;
+    font-size: 4rem;
+    margin-bottom: 50px; }
+  header #choose_area {
+    width: 50%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.6); }
+
+#hot_area {
+  width: 60%;
+  height: 150px;
+  padding: 30px;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 10px #6e6e6e;
+  position: absolute;
+  left: 50%;
+  top: 400px;
+  transform: translateX(-50%); }
+  #hot_area h3 {
+    font-size: 2rem;
+    margin-bottom: 20px; }
+  #hot_area .btn {
+    color: #fff;
+    padding: 10px 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease-out; }
+    #hot_area .btn:hover {
+      opacity: 0.9;
+      box-shadow: 5px 5px 10px #bebebe; }
+  #hot_area .btn_danger {
+    background: #f02020; }
+  #hot_area .btn_warning {
+    background: #f3d425; }
+  #hot_area .btn_success {
+    background: #1be647; }
+  #hot_area .btn_secondary {
+    background: #464545; }
+
+main {
+  min-height: calc(100vh - 60px);
+  padding-top: 100px;
+  padding-bottom: 60px;
+  background: rgba(250, 250, 250, 0.1); }
+  main .area_title {
+    color: #333;
+    font-size: 3rem;
+    margin-bottom: 50px; }
+  main .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    cursor: pointer; }
+    main .row .col {
+      width: 45%;
+      box-shadow: 1px 1px 20px #a09f9f;
+      margin-bottom: 30px;
+      transition: all 0.5s ease-out; }
+      main .row .col:hover {
+        box-shadow: 5px 5px 40px #747373; }
+      main .row .col .top {
+        background-size: cover !important;
+        background-position: center center !important;
+        height: 300px;
+        position: relative;
+        color: #fff; }
+        main .row .col .top .place_name, main .row .col .top .area_name {
+          position: absolute;
+          bottom: 20px;
+          padding: 5px 10px;
+          border-radius: 10px;
+          letter-spacing: 3px;
+          background: rgba(0, 0, 0, 0.4); }
+        main .row .col .top .place_name {
+          left: 20px; }
+        main .row .col .top .area_name {
+          right: 20px; }
+    main .row .bottom {
+      text-align: left;
+      position: relative; }
+      main .row .bottom .info {
+        list-style: none;
+        padding: 0 25px; }
+        main .row .bottom .info li {
+          display: block;
+          padding: 5px 0; }
+          main .row .bottom .info li .fas {
+            margin-right: 8px; }
+          main .row .bottom .info li .fa-clock {
+            color: #0cd693; }
+          main .row .bottom .info li .fa-map-marker-alt {
+            color: #ee7f18; }
+          main .row .bottom .info li .fa-phone {
+            color: #0059ff; }
+          main .row .bottom .info li span {
+            font-weight: 900; }
+      main .row .bottom .free_info {
+        position: absolute;
+        right: 25px;
+        bottom: 5px; }
+        main .row .bottom .free_info .fas {
+          margin-right: 5px;
+          color: #ff00c8; }
+
+footer {
+  background: #559AC8;
+  padding: 40px 0; }
+  footer .footer_title {
+    color: #fff;
+    margin-bottom: 20px; }
+  footer .data_form {
+    color: #ffc107; }
+
+#modal_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: rgba(197, 196, 196, 0.6);
+  display: none; }
+  #modal_bg #modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    border-radius: 30px;
+    overflow: hidden; }
+    #modal_bg #modal .modal_top {
+      height: 200px;
+      background-size: cover !important;
+      background-position: center center !important;
+      position: relative; }
+      #modal_bg #modal .modal_top h4 {
+        color: #fff;
+        position: absolute;
+        left: 20px;
+        bottom: 10px;
+        font-size: 1.5rem;
+        letter-spacing: 3px; }
+    #modal_bg #modal .modal_content {
+      background: #fff;
+      padding: 20px;
+      height: 400px;
+      overflow-y: scroll;
+      overflow-x: hidden; }
+      #modal_bg #modal .modal_content #google_map {
+        width: 100%;
+        height: 600px; }
+        #modal_bg #modal .modal_content #google_map #map {
+          height: 100%; }
+      #modal_bg #modal .modal_content h5 {
+        font-size: 1rem; }
+      #modal_bg #modal .modal_content p {
+        margin: 10px 0;
+        line-height: 1.4rem; }
+    #modal_bg #modal .modal_footer {
+      background: #9b9a9a;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px; }
+      #modal_bg #modal .modal_footer .btn_close {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 300;
+        background: #2772fd;
+        color: #fff; }
+
+#modal_bg.showModal {
+  display: block; }

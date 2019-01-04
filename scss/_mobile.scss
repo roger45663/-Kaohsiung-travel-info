@@ -1,0 +1,33 @@
+// Smartphones
+@include mediaMd {
+    #bg_image {
+        .title {
+            font-size: 3.5rem;
+        }
+    }
+
+    #hot_area {
+        height: 200px !important;
+
+        .btn_group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .btn {
+                margin: 0 0 10px 0;
+            }
+        }
+    }
+
+    main {
+        .row {
+            flex-direction: column;
+            align-items: center;
+
+            .col {
+                width: 80% !important;
+            }
+        }
+    }
+}
