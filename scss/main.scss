@@ -1,5 +1,4 @@
 @import 'config';
-@import 'mobile';
 
 
 // start global setup
@@ -242,7 +241,7 @@ footer {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 50%;
+        width: 55%;
         border-radius: 30px;
         overflow: hidden;
 
@@ -311,5 +310,27 @@ footer {
 #modal_bg.showModal {
     display: block;
 }
-
 // end modal
+
+// start goTop
+.goTop {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 30px;
+    cursor: pointer;
+
+    a {
+        display: block;
+        background: rgba($footer_bg_color, 0.8);
+        color: #fff;
+        padding: 5px 15px;
+
+        &:focus, &:hover {
+            background: rgba($footer_bg_color, 0.9);
+        }
+    }
+}
+// end goTop
+
+@import 'mobile';
