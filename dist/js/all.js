@@ -1,4 +1,4 @@
-(function (global, jQuery) {
+(function (global, infinite) {
     'use strict';
     // 全域變數
     // 資料網址
@@ -17,6 +17,7 @@
     const modal = document.querySelector('#modal_bg');
     const hotArea = document.querySelector('.btn_group');
     const title = document.querySelector('.area_title');
+    const body = document.querySelector('body');
 
     // 高雄地區資料
     const areaName = ['楠梓區', '左營區', '鼓山區', '三民區', '苓雅區', '新興區', '前金區', '鹽埕區', '前鎮區', '旗津區', '小港區', '鳳山區', '茂林區', '甲仙區', '六龜區', '杉林區', '美濃區', '內門區', '仁武區', '田寮區', '旗山區', '梓官區', '阿蓮區', '湖內區', '岡山區', '茄萣區', '路竹區', '鳥松區', '永安區', '燕巢區', '大樹區', '大寮區', '林園區', '彌陀區', '橋頭區', '大社區', '那瑪夏區', '桃源區'];
@@ -49,21 +50,20 @@
     function rendering(item) {
         let dataLen = item.length;
         let str = '';
-
         for (let i = 0; i < dataLen; i++) {
             if (item[i].Ticketinfo === '免費參觀') {
                 str += `<div class="col" data-name="${item[i].Name}">
-                                <div class="top" data-name="${item[i].Name}" style="background: url(${data[i].Picture1})">
-                                    <h3 class="place_name" data-name="${item[i].Name}">${data[i].Name}</h3>
-                                    <p class="area_name" data-name="${item[i].Name}">${data[i].Zone}</p>
+                                <div class="top" data-name="${item[i].Name}" style="background: url(${item[i].Picture1})">
+                                    <h3 class="place_name" data-name="${item[i].Name}">${item[i].Name}</h3>
+                                    <p class="area_name" data-name="${item[i].Name}">${item[i].Zone}</p>
                                 </div>
                                 <div class="bottom" data-name="${item[i].Name}">
                                     <ul class="info" data-name="${item[i].Name}">
-                                        <li data-name="${item[i].Name}"><i class="fas fa-clock"></i><span>開放時間: </span>${data[i].Opentime}</li>
+                                        <li data-name="${item[i].Name}"><i class="fas fa-clock"></i><span>開放時間: </span>${item[i].Opentime}</li>
                                         <li data-name="${item[i].Name}"><i class="fas fa-map-marker-alt"></i><span>地址: </span>${data[i].Add}</li>
-                                        <li data-name="${item[i].Name}"><i class="fas fa-phone"></i><span>電話: </span>${data[i].Tel}</li>
+                                        <li data-name="${item[i].Name}"><i class="fas fa-phone"></i><span>電話: </span>${item[i].Tel}</li>
                                     </ul>
-                                    <div class="free_info" data-name="${item[i].Name}"><i class="fas fa-backspace"></i>${data[i].Ticketinfo}</div>
+                                    <div class="free_info" data-name="${item[i].Name}"><i class="fas fa-backspace"></i>${item[i].Ticketinfo}</div>
                                 </div>
                             </div>
                             `
@@ -83,9 +83,11 @@
                             </div>
                             `
             }
-
         }
-        str += `
+
+        // 判斷是否要填充標籤
+        if (dataLen % 2 == 1 && body.clientWidth > 768) {
+            str += `
             <div class="col" style="opacity: 0; cursor: default;">
                 <div class="top">
                     <h3 class="place_name">有夠讚農舍</h3>
@@ -100,7 +102,8 @@
                 </div>
             </div>
         `;
-
+        }
+        
         showData.innerHTML = str;
     }
 
@@ -163,7 +166,6 @@
             }
         }
         modal.innerHTML = str;
-        console.log(modalData);
         initMap(modalData);
 
         const closeBtn = document.querySelector('.btn_close');
@@ -210,4 +212,4 @@
     showData.addEventListener('click', showModal);
     hotArea.addEventListener('click', hotZone);
 
-}(window, window.jQuery));
+}(window, window.InfiniteScroll));
