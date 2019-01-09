@@ -1,10 +1,16 @@
-(function (global, jQuery) {
+(function (global) {
     'use strict';
     // 全域變數
+    // 初始化要顯示第幾個陣列的資料
+    let nowIndex = 0;
+    // 防止資料不斷讀取
+    let isLoading = false;
     // 資料網址
     const url = 'https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97';
     // 全部JSON資料
-    let data;
+    let allData = [];
+    // 每8筆資料放入一個陣列中，配合 scroll 增加要渲染的資料
+    let pageData = [];
 
     // 取得opendata JSON資料
     const xhr = new XMLHttpRequest();
@@ -31,122 +37,193 @@
             areaSelect.appendChild(option);
         }
     }(areaName));
-    
-    // 資料讀取完進行頁面渲染
+
+    // 資料讀取狀態判定
     (function () {
         xhr.onload = function () {
-            if(xhr.readyState === 4 && xhr.status === 200) {
+            // 如果有成功抓取到JSON資料，就會將資料存到 allData 中
+            // 並將資料丟給 getData，這個函式進行陣列排序
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 let parseData = JSON.parse(xhr.responseText);
-                data = parseData.result.records;
-                rendering(data);
-            }else {
+                allData = parseData.result.records;
+                getData(allData);
+            } else {
+                // 讀取失敗會顯示錯誤
                 alert('資料讀取錯誤!!!')
             }
         }
     })();
 
-    // 頁面渲染
-    function rendering(item) {
-        let dataLen = item.length;
-        let str = '';
-
-        for (let i = 0; i < dataLen; i++) {
-            if (item[i].Ticketinfo === '免費參觀') {
-                str += `<div class="col" data-name="${item[i].Name}">
-                                <div class="top" data-name="${item[i].Name}" style="background: url(${data[i].Picture1})">
-                                    <h3 class="place_name" data-name="${item[i].Name}">${data[i].Name}</h3>
-                                    <p class="area_name" data-name="${item[i].Name}">${data[i].Zone}</p>
-                                </div>
-                                <div class="bottom" data-name="${item[i].Name}">
-                                    <ul class="info" data-name="${item[i].Name}">
-                                        <li data-name="${item[i].Name}"><i class="fas fa-clock"></i><span>開放時間: </span>${data[i].Opentime}</li>
-                                        <li data-name="${item[i].Name}"><i class="fas fa-map-marker-alt"></i><span>地址: </span>${data[i].Add}</li>
-                                        <li data-name="${item[i].Name}"><i class="fas fa-phone"></i><span>電話: </span>${data[i].Tel}</li>
-                                    </ul>
-                                    <div class="free_info" data-name="${item[i].Name}"><i class="fas fa-backspace"></i>${data[i].Ticketinfo}</div>
-                                </div>
-                            </div>
-                            `
-            } else {
-                str += `<div class="col" data-name="${item[i].Name}">
-                                <div class="top" data-name="${item[i].Name}" style="background: url(${item[i].Picture1})">
-                                    <h3 class="place_name" data-name="${item[i].Name}">${item[i].Name}</h3>
-                                    <p class="area_name" data-name="${item[i].Name}">${item[i].Zone}</p>
-                                </div>
-                                <div class="bottom" data-name="${item[i].Name}">
-                                    <ul class="info" data-name="${item[i].Name}">
-                                        <li data-name="${item[i].Name}"><i class="fas fa-clock"></i><span>開放時間: </span>${item[i].Opentime}</li>
-                                        <li data-name="${item[i].Name}"><i class="fas fa-map-marker-alt"></i><span>地址: </span>${item[i].Add}</li>
-                                        <li data-name="${item[i].Name}"><i class="fas fa-phone"></i><span>電話: </span>${item[i].Tel}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            `
-            }
-
+    // 取得資料，並將資料依筆數丟入所屬陣列中
+    function getData(item) {
+        let len = item.length;
+        let page = Math.round(len / 8) || 1;
+        nowIndex = 0;
+        console.log(item);
+        
+        // 產生陣列
+        for(let a=1; a<=page; a++) {
+            pageData.push([]);
         }
-        str += `
-            <div class="col" style="opacity: 0; cursor: default;">
-                <div class="top">
-                    <h3 class="place_name">有夠讚農舍</h3>
-                    <p class="area_name">淡水區</p>
-                </div>
-                <div class="bottom">
-                    <ul class="info">
-                        <li><i class="fas fa-clock"></i><span>開放時間: </span>08:10~17:00 (假日)、09:10~17:00 (平日)</li>
-                        <li><i class="fas fa-map-marker-alt"></i><span>地址: </span>台南市大內區二溪里唭子瓦 60 號</li>
-                        <li><i class="fas fa-phone"></i><span>電話: </span>06-5760121~3</li>
-                    </ul>
-                </div>
-            </div>
-        `;
+        
+        // 將資料丟入所屬陣列
+        for(let i=0; i<len; i++) {
+            if(i >= 0 && i <= 8) {
+                pageData[0].push(item[i]);
+            }else if (i > 8 && i <= 16) {
+                pageData[1].push(item[i]);
+            }else if (i > 16 && i <= 24) {
+                pageData[2].push(item[i]);
+            }else if (i > 24 && i <= 32) {
+                pageData[3].push(item[i]);
+            }else if (i > 32 && i <= 40) {
+                pageData[4].push(item[i]);
+            }else if (i > 40 && i <= 48) {
+                pageData[5].push(item[i]);
+            }else if (i > 48 && i <= 56) {
+                pageData[6].push(item[i]);
+            }else if (i > 56 && i <= 64) {
+                pageData[7].push(item[i]);
+            }else if (i > 64 && i <= 72) {
+                pageData[8].push(item[i]);
+            }else if (i > 72 && i <= 80) {
+                pageData[9].push(item[i]);
+            }else if (i > 80 && i <= 88) {
+                pageData[10].push(item[i]);
+            }else if (i > 88 && i <= 96) {
+                pageData[11].push(item[i]);
+            }else if (i > 96 && i <= 102) {
+                pageData[12].push(item[i]);
+            }
+        }
 
-        showData.innerHTML = str;
+        rendering();
+    }
+
+    // 頁面渲染
+    function rendering() {
+        // 判斷是否有這個陣列
+        if(!pageData[nowIndex]) {
+            return;
+        }
+        let pageLen = pageData[nowIndex].length;
+
+        // 取得陣列中的資料，並進行渲染
+        for (let j = 0; j < pageLen; j++) {
+            let el = document.createElement('div');
+            el.classList.add('col');
+            el.setAttribute("data-name", `${pageData[nowIndex][j].Name}`);
+            if (pageData[nowIndex][j].Ticketinfo === '免費參觀') {
+                el.innerHTML += `
+                    <div class="top" data-name="${pageData[nowIndex][j].Name}" style="background: url(${pageData[nowIndex][j].Picture1})">
+                        <h3 class="place_name" data-name="${pageData[nowIndex][j].Name}">${pageData[nowIndex][j].Name}</h3>
+                        <p class="area_name" data-name="${pageData[nowIndex][j].Name}">${pageData[nowIndex][j].Zone}</p>
+                    </div>
+                    <div class="bottom" data-name="${pageData[nowIndex][j].Name}">
+                        <ul class="info" data-name="${pageData[nowIndex][j].Name}">
+                            <li data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-clock"></i><span>開放時間: </span>${pageData[nowIndex][j].Opentime}</li>
+                            <li data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-map-marker-alt"></i><span>地址: </span>${pageData[nowIndex][j].Add}</li>
+                            <li data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-phone"></i><span>電話: </span>${pageData[nowIndex][j].Tel}</li>
+                        </ul>
+                        <div class="free_info" data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-backspace"></i>${pageData[nowIndex][j].Ticketinfo}</div>
+                    </div>
+                `;
+            }else {
+                el.innerHTML += `
+                    <div class="top" data-name="${pageData[nowIndex][j].Name}" style="background: url(${pageData[nowIndex][j].Picture1})">
+                        <h3 class="place_name" data-name="${pageData[nowIndex][j].Name}">${pageData[nowIndex][j].Name}</h3>
+                        <p class="area_name" data-name="${pageData[nowIndex][j].Name}">${pageData[nowIndex][j].Zone}</p>
+                    </div>
+                    <div class="bottom" data-name="${pageData[nowIndex][j].Name}">
+                        <ul class="info" data-name="${pageData[nowIndex][j].Name}">
+                            <li data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-clock"></i><span>開放時間: </span>${pageData[nowIndex][j].Opentime}</li>
+                            <li data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-map-marker-alt"></i><span>地址: </span>${pageData[nowIndex][j].Add}</li>
+                            <li data-name="${pageData[nowIndex][j].Name}"><i class="fas fa-phone"></i><span>電話: </span>${pageData[nowIndex][j].Tel}</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            showData.appendChild(el);
+        }
+
+        // 判斷是否需要塞入 placeholder
+        if (pageLen % 2 === 1 && pageData[nowIndex] === pageData[pageData.length - 1] && window.innerWidth > 768) {
+            let placeholder = document.createElement('div');
+            placeholder.classList.add('col');
+            placeholder.style.opacity = 0;
+            placeholder.style.cursor = 'default';
+            placeholder.innerHTML += `
+                <div class="top">
+                        <h3 class="place_name">有夠讚農舍</h3>
+                        <p class="area_name">淡水區</p>
+                    </div>
+                    <div class="bottom">
+                        <ul class="info">
+                            <li><i class="fas fa-clock"></i><span>開放時間: </span>08:10~17:00 (假日)、09:10~17:00 (平日)</li>
+                            <li><i class="fas fa-map-marker-alt"></i><span>地址: </span>台南市大內區二溪里唭子瓦 60 號</li>
+                            <li><i class="fas fa-phone"></i><span>電話: </span>06-5760121~3</li>
+                        </ul>
+                    </div>
+            `;
+            showData.appendChild(placeholder);
+        }
+
     }
 
     // 選單比對資料進行頁面渲染
     function changeArea(e) {
+        showData.innerHTML = '';
+        pageData = [];
         let selectName = e.target.value;
         title.innerHTML = selectName;
         let comparison = [];
-        for(let i=0; i<data.length; i++) {
-            if (selectName === data[i].Zone) {
-                comparison.push(data[i]);
+        for (let i = 0; i < allData.length; i++) {
+            if (selectName === allData[i].Zone) {
+                comparison.push(allData[i]);
             }
         }
-        rendering(comparison);
+
+        if(pageData) {
+            getData(comparison);
+        }
+        
     };
 
     // 熱門地區比對
     function hotZone(e) {
+        showData.innerHTML = '';
+        pageData = [];
         let zoneArr = [];
         title.innerHTML = e.target.textContent;
-        for(let i=0; i<data.length; i++) {
-            if (e.target.textContent === data[i].Zone) {
-                zoneArr.push(data[i]);
+        for (let i = 0; i < allData.length; i++) {
+            if (e.target.textContent === allData[i].Zone) {
+                zoneArr.push(allData[i]);
             }
         }
-        rendering(zoneArr);
+
+        if(zoneArr) {
+            getData(zoneArr);
+        }
     }
 
     // 渲染 modal
     function showModal(e) {
-        if(e.target === showData) { return;}
+        if (e.target === showData) { return; }
         let placeName = e.target.dataset.name;
         let modalData = [];
         let str = '';
         modal.classList.add('showModal');
-        for(let i=0; i<data.length; i++) {
-            if(placeName === data[i].Name) {
+        for (let i = 0; i < allData.length; i++) {
+            if (placeName === allData[i].Name && placeName) {
                 str += `
                     <div id="modal">
-                        <div class="modal_top" style="background: url(${data[i].Picture1})">
-                            <h4>${data[i].Name}</h4>
+                        <div class="modal_top" style="background: url(${allData[i].Picture1})">
+                            <h4>${allData[i].Name}</h4>
                         </div>
 
                         <div class="modal_content">
                             <h5>簡介</h5>
-                            <p>${data[i].Description}</p>
+                            <p>${allData[i].Description}</p>
                             <hr>
                             <h5>Google Map</h5>
                             <div id="google_map">
@@ -156,14 +233,13 @@
 
                         <div class="modal_footer">
                             <a href="#" class="btn_close">關閉</a>
-                            <h6>上一次更新時間：${data[i].Changetime}</h6>
+                            <h6>上一次更新時間：${allData[i].Changetime}</h6>
                         </div>
                 `;
-                modalData.push(data[i]);
+                modalData.push(allData[i]);
             }
         }
         modal.innerHTML = str;
-        console.log(modalData);
         initMap(modalData);
 
         const closeBtn = document.querySelector('.btn_close');
@@ -178,7 +254,7 @@
     // google map API 載入
     function initMap(item) {
         let mapData = item[0];
-        var myLatlng = { lat: Number(mapData.Py) , lng: Number(mapData.Px) };
+        var myLatlng = { lat: Number(mapData.Py), lng: Number(mapData.Px) };
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15,
@@ -205,9 +281,27 @@
         });
     };
 
+    // infinite scroll
+    function infinteScroll() {
+        // 瀏覽器滾輪和頁面頂部之間的距離
+        let scrollHeight = document.documentElement.scrollTop;
+        // 所見畫面視窗的高度
+        let windowInnerHeight = window.innerHeight;
+        // 實際頁面總高
+        let totalHeight = document.documentElement.scrollHeight;
+        // 判斷頁面滑到快底部時，及觸發裡面的程式
+        if (scrollHeight + windowInnerHeight >= totalHeight - 200) {
+            if (!isLoading) {
+                nowIndex++;
+                rendering();
+            }
+        }
+    }
+
     // 事件監聽
     areaSelect.addEventListener('change', changeArea);
     showData.addEventListener('click', showModal);
     hotArea.addEventListener('click', hotZone);
+    window.addEventListener('scroll', infinteScroll);
 
-}(window, window.jQuery));
+}(window));
