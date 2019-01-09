@@ -57,46 +57,21 @@
     // 取得資料，並將資料依筆數丟入所屬陣列中
     function getData(item) {
         let len = item.length;
-        let page = Math.round(len / 8) || 1;
+        // 資料暫存區
+        let page = [];
         nowIndex = 0;
-        console.log(item);
-        
-        // 產生陣列
-        for(let a=1; a<=page; a++) {
-            pageData.push([]);
-        }
-        
-        // 將資料丟入所屬陣列
+
+        // 依序將資料塞入暫存區
         for(let i=0; i<len; i++) {
-            if(i >= 0 && i <= 8) {
-                pageData[0].push(item[i]);
-            }else if (i > 8 && i <= 16) {
-                pageData[1].push(item[i]);
-            }else if (i > 16 && i <= 24) {
-                pageData[2].push(item[i]);
-            }else if (i > 24 && i <= 32) {
-                pageData[3].push(item[i]);
-            }else if (i > 32 && i <= 40) {
-                pageData[4].push(item[i]);
-            }else if (i > 40 && i <= 48) {
-                pageData[5].push(item[i]);
-            }else if (i > 48 && i <= 56) {
-                pageData[6].push(item[i]);
-            }else if (i > 56 && i <= 64) {
-                pageData[7].push(item[i]);
-            }else if (i > 64 && i <= 72) {
-                pageData[8].push(item[i]);
-            }else if (i > 72 && i <= 80) {
-                pageData[9].push(item[i]);
-            }else if (i > 80 && i <= 88) {
-                pageData[10].push(item[i]);
-            }else if (i > 88 && i <= 96) {
-                pageData[11].push(item[i]);
-            }else if (i > 96 && i <= 102) {
-                pageData[12].push(item[i]);
+            page.push(item[i]);
+
+            // 如果暫存區資料有8筆或總比數小於8，就將資料塞到 pageData 裡
+            if(page.length === 8 || len<8) {
+                pageData.push(page);
+                page = [];
             }
         }
-
+        
         rendering();
     }
 
