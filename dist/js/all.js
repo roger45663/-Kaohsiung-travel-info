@@ -65,11 +65,16 @@
         for(let i=0; i<len; i++) {
             page.push(item[i]);
 
-            // 如果暫存區資料有8筆或總比數小於8，就將資料塞到 pageData 裡
-            if(page.length === 8 || len<8) {
+            // 如果暫存區資料有8筆，就將資料塞到 pageData 裡
+            if(page.length === 8) {
                 pageData.push(page);
                 page = [];
             }
+        }
+
+        // 如果剩餘的資料不到8筆，只要有資料一樣塞入 pageData 裡
+        if(page.length>0) {
+            pageData.push(page);
         }
         
         rendering();
@@ -166,6 +171,7 @@
 
     // 熱門地區比對
     function hotZone(e) {
+        e.preventDefault();
         showData.innerHTML = '';
         pageData = [];
         let zoneArr = [];
