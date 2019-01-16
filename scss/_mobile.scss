@@ -10,9 +10,14 @@
         height: 200px;
 
         .btn_group {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
 
             .btn {
                 margin: 0 0 10px 0;
@@ -22,8 +27,13 @@
 
     main {
         .row {
-            flex-direction: column;
-            align-items: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
 
             .col {
                 width: 80%;

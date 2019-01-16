@@ -1,34 +1,6 @@
 @import 'config';
 
 
-// start global setup
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Microsoft JhengHei', serif;
-}
-
-.container {
-    max-width: 1024px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-}
-
-a {
-    text-decoration: none;
-}
-
-// end global setup
-
 // start header
 header {
     @include background;
@@ -57,11 +29,13 @@ header {
     padding: 30px;
     border-radius: 30px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgb(110, 110, 110);
+    -webkit-box-shadow: 0 0 10px rgb(110, 110, 110);
+            box-shadow: 0 0 10px rgb(110, 110, 110);
     position: absolute;
     left: 50%;
     top: 400px;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
 
     h3 {
         font-size: 2rem;
@@ -78,7 +52,8 @@ header {
 
         &:hover {
             opacity: 0.9;
-            box-shadow: 5px 5px 10px rgb(190, 190, 190);
+            -webkit-box-shadow: 5px 5px 10px rgb(190, 190, 190);
+                    box-shadow: 5px 5px 10px rgb(190, 190, 190);
         }
     }
 
@@ -98,7 +73,6 @@ header {
         background: rgb(70, 69, 69);
     }
 }
-
 // end header
 
 // start main
@@ -115,19 +89,25 @@ main {
     }
 
     .row {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
         cursor: pointer;
 
         .col {
             width: 45%;
-            box-shadow: 1px 1px 20px rgb(160, 159, 159);
+            -webkit-box-shadow: 1px 1px 20px rgb(160, 159, 159);
+                    box-shadow: 1px 1px 20px rgb(160, 159, 159);
             margin-bottom: 30px;
             @include easeOut;
 
             &:hover {
-                box-shadow: 5px 5px 40px rgb(116, 115, 115);
+                -webkit-box-shadow: 5px 5px 40px rgb(116, 115, 115);
+                        box-shadow: 5px 5px 40px rgb(116, 115, 115);
             }
 
             .top {
@@ -204,10 +184,20 @@ main {
             }
         }
     }
+
+    .pagination {
+        a {
+            color: #fff;
+            background: $footer_bg_color;
+            padding: 5px 10px;
+
+            &:hover,&:active {
+                opacity: 0.8;
+            }
+        }
+    }
 }
-
 // end main
-
 
 // start footer
 footer {
@@ -240,7 +230,8 @@ footer {
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
         width: 55%;
         border-radius: 30px;
         overflow: hidden;
@@ -291,9 +282,15 @@ footer {
         .modal_footer {
             background: rgb(155, 154, 154);
             height: 60px;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
             padding: 20px;
 
             .btn_close {
